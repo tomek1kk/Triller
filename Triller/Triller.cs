@@ -160,11 +160,6 @@ namespace Triller
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            //if (radioButton1.Checked == true)
-            //{
-            //    colorDialog1.ShowDialog();
-            //    panel6.BackColor = colorDialog1.Color;
-            //}
 
         }
 
@@ -192,6 +187,12 @@ namespace Triller
                     pictureBox2.Image = new Bitmap(dlg.FileName);
                 }
             }
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            colorDialog2.ShowDialog();
+            pictureBox3.BackColor = colorDialog2.Color;
         }
     }
 }

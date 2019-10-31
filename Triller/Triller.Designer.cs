@@ -65,6 +65,9 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.colorDialog2 = new System.Windows.Forms.ColorDialog();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
@@ -74,6 +77,7 @@
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -124,7 +128,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(85, 238);
+            this.label2.Location = new System.Drawing.Point(85, 279);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(119, 29);
             this.label2.TabIndex = 3;
@@ -157,7 +161,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.Location = new System.Drawing.Point(85, 336);
+            this.label3.Location = new System.Drawing.Point(85, 377);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(214, 29);
             this.label3.TabIndex = 6;
@@ -200,7 +204,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label4.Location = new System.Drawing.Point(85, 474);
+            this.label4.Location = new System.Drawing.Point(85, 506);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(280, 29);
             this.label4.TabIndex = 10;
@@ -241,6 +245,7 @@
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Location = new System.Drawing.Point(77, 3);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(48, 43);
@@ -264,7 +269,7 @@
             this.panel3.Controls.Add(this.trackBar1);
             this.panel3.Controls.Add(this.radioButton8);
             this.panel3.Controls.Add(this.radioButton9);
-            this.panel3.Location = new System.Drawing.Point(90, 506);
+            this.panel3.Location = new System.Drawing.Point(90, 538);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(285, 200);
             this.panel3.TabIndex = 14;
@@ -303,7 +308,7 @@
             this.panel4.Controls.Add(this.radioButton5);
             this.panel4.Controls.Add(this.radioButton6);
             this.panel4.Controls.Add(this.radioButton7);
-            this.panel4.Location = new System.Drawing.Point(85, 368);
+            this.panel4.Location = new System.Drawing.Point(85, 409);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(326, 94);
             this.panel4.TabIndex = 0;
@@ -312,7 +317,7 @@
             // 
             this.panel5.Controls.Add(this.radioButton3);
             this.panel5.Controls.Add(this.radioButton4);
-            this.panel5.Location = new System.Drawing.Point(90, 270);
+            this.panel5.Location = new System.Drawing.Point(90, 311);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(200, 63);
             this.panel5.TabIndex = 0;
@@ -360,7 +365,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(272, 282);
+            this.pictureBox2.Location = new System.Drawing.Point(272, 314);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(100, 63);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -448,11 +453,34 @@
             this.label14.TabIndex = 22;
             this.label14.Text = "ks";
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label15.Location = new System.Drawing.Point(85, 236);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(160, 29);
+            this.label15.TabIndex = 21;
+            this.label15.Text = "Kolor światła:";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.White;
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox3.Location = new System.Drawing.Point(251, 225);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(54, 50);
+            this.pictureBox3.TabIndex = 22;
+            this.pictureBox3.TabStop = false;
+            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            // 
             // Triller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1327, 739);
+            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.radioButton11);
             this.Controls.Add(this.radioButton10);
@@ -483,6 +511,7 @@
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -527,6 +556,9 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.ColorDialog colorDialog2;
     }
 }
 
