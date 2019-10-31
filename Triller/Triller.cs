@@ -11,15 +11,17 @@ namespace Triller
         List<Triangle> triangles = new List<Triangle>();
         const int N = 6;
         const int M = 8;
+        
 
         public Triller()
         {
             InitializeComponent();
             GenerateTriangles();
         }
-
+        
         private void GenerateTriangles()
         {
+            
             var triangleA = panel1.Width / M;
             var triangleB = panel1.Height / N;
 
@@ -146,7 +148,7 @@ namespace Triller
 
         private void panel6_Paint(object sender, PaintEventArgs e)
         {
-
+            
         }
 
         private void panel6_Click(object sender, EventArgs e)
@@ -157,6 +159,7 @@ namespace Triller
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
+            
             if (radioButton4.Checked == true)
             {
                 OpenFileDialog dlg = new OpenFileDialog();
@@ -169,6 +172,7 @@ namespace Triller
                 }
             }
         }
+        
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
