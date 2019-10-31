@@ -9,9 +9,22 @@ namespace Triller
 {
     public class Triangle
     {
+
         public Point A { get; set; }
         public Point B { get; set; }
         public Point C { get; set; }
+
+        public double kd, ks;
+        public int m;
+
+        public void SetCoefficients()
+        {
+            Random r = new Random();
+            int m;
+            kd = (double)(r.Next() % 101) / 100;
+            ks = (double)(r.Next() % 101) / 100;
+            m = r.Next() % 100 + 1;
+        }
 
         public List<Point> Points
         {
@@ -30,7 +43,7 @@ namespace Triller
             g.DrawPolygon(color, Points.ToArray());
         }
 
-
+        
 
     }
 }

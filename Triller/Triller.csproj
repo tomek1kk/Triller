@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawSettings.cs" />
     <Compile Include="Edge.cs" />
+    <Compile Include="MyVector.cs" />
     <Compile Include="Triangle.cs" />
     <Compile Include="Triller.cs">
       <SubType>Form</SubType>
