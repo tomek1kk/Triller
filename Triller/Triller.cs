@@ -90,7 +90,7 @@ namespace Triller
                     }
                 }
                 AET.Sort((e1, e2) => e1.GetX(y) > e2.GetX(y) ? 1 : -1);
-                for (int  j = 0; j < AET.Count / 2; j++)
+                for (int j = 0; j < AET.Count / 2; j++)
                 {
                     for (int p = AET[2 * j + 1].GetX(y); p >= AET[2 * j].GetX(y); p--)
                         g.FillRectangle(color, p, y, 1, 1);
@@ -131,8 +131,8 @@ namespace Triller
                         b = Brushes.Yellow;
                         break;
                 }
-
-                FillPolygon(t.Points, b, g);
+                //FillPolygon(t.Points, b, g);
+                t.Render(g, Pens.Black);
             }
 
         }
@@ -144,7 +144,54 @@ namespace Triller
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
+            if (radioButton2.Checked == true)
+            {
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.Title = "Open Image";
+                dlg.Filter = "bmp files (*.bmp)|*.bmp";
 
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    pictureBox1.Image = new Bitmap(dlg.FileName);
+                }
+            }
+
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            //if (radioButton1.Checked == true)
+            //{
+            //    colorDialog1.ShowDialog();
+            //    panel6.BackColor = colorDialog1.Color;
+            //}
+
+        }
+
+        private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel6_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            panel6.BackColor = colorDialog1.Color;
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton4.Checked == true)
+            {
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.Title = "Open Image";
+                dlg.Filter = "bmp files (*.bmp)|*.bmp";
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    pictureBox2.Image = new Bitmap(dlg.FileName);
+                }
+            }
         }
     }
 }
