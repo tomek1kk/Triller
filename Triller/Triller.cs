@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Triller
@@ -48,6 +43,63 @@ namespace Triller
             }
         }
 
+        private void FillPolygon(List<Point> points, Brush color, Graphics g)
+        {
+
+            List<Point> pointsSorted = new List<Point>(points);
+            pointsSorted.Sort((p1, p2) => p1.Y > p2.Y ? 1 : -1);
+            List<int> ind = new List<int>();
+            for (int i = 0; i < pointsSorted.Count; i++)
+                ind.Add(points.FindIndex(p => p == pointsSorted[i]));
+
+            int ymin = pointsSorted[0].Y;
+            int ymax = pointsSorted[pointsSorted.Count - 1].Y;
+
+            List<Edge> AET = new List<Edge>();
+
+            for (int y = ymin; y <= ymax; y++)
+            {
+                for (int k = 0; k < points.Count; k++)
+                {
+                    if (points[ind[k]].Y == y - 1)
+                    {
+                        if (points[ind[k] - 1 >= 0 ? ind[k] - 1 : points.Count - 1].Y > points[ind[k]].Y)
+                        {
+                            AET.Add(new Edge
+                            {
+                                A = points[ind[k] - 1 >= 0 ? ind[k] - 1 : points.Count - 1],
+                                B = points[ind[k]]
+                            });
+                        }
+                        else
+                        {
+                            AET.Remove(AET.Find(e => e.A == points[ind[k] - 1 >= 0 ? ind[k] - 1 : points.Count - 1] && e.B == points[ind[k]]));
+                        }
+                        if (points[(ind[k] + 1) % points.Count].Y > points[ind[k]].Y)
+                        {
+                            AET.Add(new Edge
+                            {
+                                A = points[(ind[k] + 1) % points.Count],
+                                B = points[ind[k]]
+                            });
+                        }
+                        else
+                        {
+                            AET.Remove(AET.Find(e => e.A == points[(ind[k] + 1) % points.Count] && e.B == points[ind[k]]));
+                        }
+                    }
+                }
+                AET.Sort((e1, e2) => e1.GetX(y) > e2.GetX(y) ? 1 : -1);
+                for (int  j = 0; j < AET.Count / 2; j++)
+                {
+                    for (int p = AET[2 * j + 1].GetX(y); p >= AET[2 * j].GetX(y); p--)
+                        g.FillRectangle(color, p, y, 1, 1);
+                }
+            }
+
+
+        }
+
         private void Triller_Paint(object sender, PaintEventArgs e)
         {
 
@@ -56,11 +108,33 @@ namespace Triller
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
+            Random r = new Random();
+            Brush b = Brushes.Red;
             foreach (var t in triangles)
             {
-                Console.WriteLine(t.A + "    " + t.B + "     " + t.C);
-                t.Render(g, Pens.Black);
+                int p = r.Next() % 5;
+                switch (p)
+                {
+                    case 0:
+                        b = Brushes.Red;
+                        break;
+                    case 1:
+                        b = Brushes.Blue;
+                        break;
+                    case 2:
+                        b = Brushes.Green;
+                        break;
+                    case 3:
+                        b = Brushes.Purple;
+                        break;
+                    case 4:
+                        b = Brushes.Yellow;
+                        break;
+                }
+
+                FillPolygon(t.Points, b, g);
             }
+
         }
 
         private void label1_Click(object sender, EventArgs e)

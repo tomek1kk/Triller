@@ -13,14 +13,24 @@ namespace Triller
         public Point B { get; set; }
         public Point C { get; set; }
 
+        public List<Point> Points
+        {
+            get
+            {
+                List<Point> points = new List<Point>();
+                points.Add(A);
+                points.Add(B);
+                points.Add(C);
+                return points;
+            }
+        }
+
         public void Render(Graphics g, Pen color)
         {
-            Point[] points = new Point[3];
-            points[0] = A;
-            points[1] = B;
-            points[2] = C;
-            g.DrawPolygon(color, points);
+            g.DrawPolygon(color, Points.ToArray());
         }
+
+
 
     }
 }

@@ -175,9 +175,9 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label4.Location = new System.Drawing.Point(82, 524);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(230, 29);
+            this.label4.Size = new System.Drawing.Size(280, 29);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Współczynniki k i m:";
+            this.label4.Text = "Współczynniki kd, ks i m:";
             // 
             // radioButton8
             // 
@@ -207,7 +207,7 @@
             this.panel2.Controls.Add(this.radioButton2);
             this.panel2.Location = new System.Drawing.Point(85, 96);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 100);
+            this.panel2.Size = new System.Drawing.Size(200, 73);
             this.panel2.TabIndex = 13;
             // 
             // panel3
@@ -216,7 +216,7 @@
             this.panel3.Controls.Add(this.radioButton9);
             this.panel3.Location = new System.Drawing.Point(87, 565);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(285, 100);
+            this.panel3.Size = new System.Drawing.Size(285, 89);
             this.panel3.TabIndex = 14;
             // 
             // panel4
@@ -226,7 +226,7 @@
             this.panel4.Controls.Add(this.radioButton7);
             this.panel4.Location = new System.Drawing.Point(85, 405);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(266, 116);
+            this.panel4.Size = new System.Drawing.Size(326, 103);
             this.panel4.TabIndex = 0;
             // 
             // panel5
@@ -235,7 +235,7 @@
             this.panel5.Controls.Add(this.radioButton4);
             this.panel5.Location = new System.Drawing.Point(85, 244);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(200, 100);
+            this.panel5.Size = new System.Drawing.Size(200, 86);
             this.panel5.TabIndex = 0;
             // 
             // Triller
