@@ -68,6 +68,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.colorDialog2 = new System.Windows.Forms.ColorDialog();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
@@ -82,7 +83,7 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(474, 103);
+            this.panel1.Location = new System.Drawing.Point(475, 133);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(801, 500);
             this.panel1.TabIndex = 0;
@@ -137,6 +138,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
+            this.radioButton3.Checked = true;
             this.radioButton3.Location = new System.Drawing.Point(8, 3);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(102, 21);
@@ -170,6 +172,7 @@
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
+            this.radioButton5.Checked = true;
             this.radioButton5.Location = new System.Drawing.Point(13, 13);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(170, 21);
@@ -474,11 +477,22 @@
             this.pictureBox3.TabStop = false;
             this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button1.Location = new System.Drawing.Point(665, 31);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(403, 56);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Rysuj";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // Triller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1327, 739);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.pictureBox2);
@@ -559,6 +573,7 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.ColorDialog colorDialog2;
+        private System.Windows.Forms.Button button1;
     }
 }
 

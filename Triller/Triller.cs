@@ -108,29 +108,10 @@ namespace Triller
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            Random r = new Random();
             Brush b = Brushes.Red;
             foreach (var t in triangles)
             {
-                int p = r.Next() % 5;
-                switch (p)
-                {
-                    case 0:
-                        b = Brushes.Red;
-                        break;
-                    case 1:
-                        b = Brushes.Blue;
-                        break;
-                    case 2:
-                        b = Brushes.Green;
-                        break;
-                    case 3:
-                        b = Brushes.Purple;
-                        break;
-                    case 4:
-                        b = Brushes.Yellow;
-                        break;
-                }
+
                 //FillPolygon(t.Points, b, g);
                 t.Render(g, Pens.Black);
             }
