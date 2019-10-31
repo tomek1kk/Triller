@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+
 namespace Triller
 {
     public partial class Triller : Form
     {
 
         List<Triangle> triangles = new List<Triangle>();
+        DrawSettings settings;
+        Bitmap bitmap;
         const int N = 6;
         const int M = 8;
         
@@ -45,9 +48,8 @@ namespace Triller
             }
         }
 
-        private void FillPolygon(List<Point> points, Brush color, Graphics g)
+        private void FillPolygon(List<Point> points, Brush color, Graphics g, Triangle t = null)
         {
-
             List<Point> pointsSorted = new List<Point>(points);
             pointsSorted.Sort((p1, p2) => p1.Y > p2.Y ? 1 : -1);
             List<int> ind = new List<int>();
@@ -95,7 +97,7 @@ namespace Triller
                 for (int j = 0; j < AET.Count / 2; j++)
                 {
                     for (int p = AET[2 * j + 1].GetX(y); p >= AET[2 * j].GetX(y); p--)
-                        g.FillRectangle(color, p, y, 1, 1);
+                        g.FillRectangle(new SolidBrush(GetColor(p, y, settings, t)), p, y, 1, 1);
                 }
             }
 
@@ -109,13 +111,15 @@ namespace Triller
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
+            Console.WriteLine("painting");
+            settings = new DrawSettings(this);
             Graphics g = e.Graphics;
             Brush b = Brushes.Red;
             foreach (var t in triangles)
             {
 
-                //FillPolygon(t.Points, b, g);
-                t.Render(g, Pens.Black);
+                FillPolygon(t.Points, b, g, t);
+                //t.Render(g, Pens.Black);
             }
 
         }
@@ -178,6 +182,82 @@ namespace Triller
         {
             colorDialog2.ShowDialog();
             pictureBox3.BackColor = colorDialog2.Color;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //settings = new DrawSettings(this);
+            panel1.Invalidate();
+        }
+
+        public Color GetColor(int x, int y, DrawSettings settings, Triangle t)
+        {
+            double kd, ks;
+            int m;
+            Color objectColor;
+            Color lightColor = pictureBox3.BackColor;
+            MyVector L;
+            MyVector N;
+            MyVector V = new MyVector(0, 0, 1);
+
+            if (settings.coefficients == Coefficients.Constant)
+            {
+                kd = (double)trackBar1.Value / 100;
+                ks = (double)trackBar2.Value / 100;
+                m = trackBar3.Value;
+            }
+            else
+            {
+                t.SetCoefficients();
+                kd = t.kd;
+                ks = t.ks;
+                m = t.m;
+                
+            }
+            if (settings.objectColor == ObjectColor.Constant)
+            {
+                objectColor = panel6.BackColor;
+            }
+            else
+            {
+                if (bitmap == null)
+                    bitmap = new Bitmap(pictureBox1.Image);
+
+                objectColor = bitmap.GetPixel(x, y);
+            }
+            if (settings.light == Light.Constant)
+            {
+                L = new MyVector(0, 0, 1);
+            }
+            else
+            {
+                // TODO
+                L = new MyVector(0, 0, 1);
+            }
+            if (settings.vectorN == VectorN.Constant)
+            {
+                N = new MyVector(0, 0, 1);
+            }
+            else
+            {
+                // TODO
+                N = new MyVector(0, 0, 1);
+            }
+
+            MyVector R = new MyVector(2 * N.X - L.X, 2 * N.Y - L.Y, 2 * N.Z - L.Z);
+
+            if (kd != 0.0)
+                Console.WriteLine("cos");
+
+            var IR = kd * ((double)lightColor.R / 255) * ((double)objectColor.R / 255) * MyVector.MyCos(N, L) +
+                     ks * ((double)lightColor.R / 255) * ((double)objectColor.R / 255) * Math.Pow(MyVector.MyCos(V, R), m);
+            var IG = kd * ((double)lightColor.G / 255) * ((double)objectColor.G / 255) * MyVector.MyCos(N, L) +
+                     ks * ((double)lightColor.G / 255) * ((double)objectColor.G / 255) * Math.Pow(MyVector.MyCos(V, R), m);
+            var IB = kd * ((double)lightColor.B / 255) * ((double)objectColor.B / 255) * MyVector.MyCos(N, L) +
+                     ks * ((double)lightColor.B / 255) * ((double)objectColor.B / 255) * Math.Pow(MyVector.MyCos(V, R), m);
+
+            return Color.FromArgb(255, (int)(IR * 255) > 255 ? 255 : (int)(IR * 255), (int)(IG * 255) > 255 ? 255 : (int)(IG * 255),
+                (int)(IB * 255) > 255 ? 255 : (int)(IB * 255));
         }
     }
 }
