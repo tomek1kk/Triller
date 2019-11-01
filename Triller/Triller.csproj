@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="DrawSettings.cs" />
     <Compile Include="Edge.cs" />
+    <Compile Include="HelperFunctions.cs" />
     <Compile Include="MyVector.cs" />
     <Compile Include="Triangle.cs" />
     <Compile Include="Triller.cs">

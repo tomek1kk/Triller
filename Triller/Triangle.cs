@@ -14,14 +14,6 @@ namespace Triller
         public Point B { get; set; }
         public Point C { get; set; }
 
-        public Color ColorA { get; set; }
-        public Color ColorB { get; set; }
-        public Color ColorC { get; set; }
-
-        public Color ColorAN { get; set; }
-        public Color ColorBN { get; set; }
-        public Color ColorCN { get; set; }
-
         public double kd, ks;
         public int m;
 
@@ -80,21 +72,6 @@ namespace Triller
             return Color.FromArgb(255, R, G, Bl);
         }
 
-        public void SetColors(Color c1, Color c2, Color c3)
-        {
-            ColorA = c1;
-            ColorB = c2;
-            ColorC = c3;
-            colors = true;
-        }
-
-        public void SetNormalColors(Color c1, Color c2, Color c3)
-        {
-            ColorAN = c1;
-            ColorBN = c2;
-            ColorCN = c3;
-            normalColors = true;
-        }
 
     }
 }

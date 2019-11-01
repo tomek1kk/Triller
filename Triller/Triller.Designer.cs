@@ -98,7 +98,6 @@
             this.label1.Size = new System.Drawing.Size(162, 29);
             this.label1.TabIndex = 0;
             this.label1.Text = "Kolor obiektu:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // radioButton1
             // 
@@ -111,7 +110,6 @@
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "stały";
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // radioButton2
             // 
@@ -254,7 +252,6 @@
             this.panel6.Size = new System.Drawing.Size(48, 43);
             this.panel6.TabIndex = 15;
             this.panel6.Click += new System.EventHandler(this.panel6_Click);
-            this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
             // 
             // panel3
             // 
@@ -514,7 +511,6 @@
             this.Controls.Add(this.panel1);
             this.Name = "Triller";
             this.Text = "Triller";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Triller_Paint);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
