@@ -367,7 +367,7 @@
             this.trackBar3.Size = new System.Drawing.Size(215, 56);
             this.trackBar3.TabIndex = 21;
             this.trackBar3.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar3.Value = 1;
+            this.trackBar3.Value = 30;
             // 
             // trackBar2
             // 
@@ -377,6 +377,7 @@
             this.trackBar2.Size = new System.Drawing.Size(215, 56);
             this.trackBar2.TabIndex = 14;
             this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar2.Value = 80;
             // 
             // trackBar1
             // 
@@ -386,6 +387,7 @@
             this.trackBar1.Size = new System.Drawing.Size(215, 56);
             this.trackBar1.TabIndex = 13;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar1.Value = 70;
             // 
             // panel4
             // 

@@ -246,9 +246,6 @@ namespace Triller
 
             MyVector R = new MyVector(2 * N.X - L.X, 2 * N.Y - L.Y, 2 * N.Z - L.Z);
 
-            if (kd != 0.0)
-                Console.WriteLine("cos");
-
             var IR = kd * ((double)lightColor.R / 255) * ((double)objectColor.R / 255) * MyVector.MyCos(N, L) +
                      ks * ((double)lightColor.R / 255) * ((double)objectColor.R / 255) * Math.Pow(MyVector.MyCos(V, R), m);
             var IG = kd * ((double)lightColor.G / 255) * ((double)objectColor.G / 255) * MyVector.MyCos(N, L) +
