@@ -12,6 +12,8 @@ namespace Triller
         List<Triangle> triangles = new List<Triangle>();
         DrawSettings settings;
         Bitmap bitmap;
+        Bitmap normalBitmap;
+        bool draw = false;
         const int N = 6;
         const int M = 8;
         
@@ -48,7 +50,7 @@ namespace Triller
             }
         }
 
-        private void FillPolygon(List<Point> points, Brush color, Graphics g, Triangle t = null)
+        private void FillPolygon(List<Point> points, Graphics g, Triangle t = null)
         {
             List<Point> pointsSorted = new List<Point>(points);
             pointsSorted.Sort((p1, p2) => p1.Y > p2.Y ? 1 : -1);
@@ -98,6 +100,7 @@ namespace Triller
                 {
                     for (int p = AET[2 * j + 1].GetX(y); p >= AET[2 * j].GetX(y); p--)
                         g.FillRectangle(new SolidBrush(GetColor(p, y, settings, t)), p, y, 1, 1);
+
                 }
             }
 
@@ -111,14 +114,13 @@ namespace Triller
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            Console.WriteLine("painting");
             settings = new DrawSettings(this);
             Graphics g = e.Graphics;
-            Brush b = Brushes.Red;
+
             foreach (var t in triangles)
             {
-
-                FillPolygon(t.Points, b, g, t);
+                if (draw == true)
+                    FillPolygon(t.Points, g, t);
                 //t.Render(g, Pens.Black);
             }
 
@@ -139,7 +141,9 @@ namespace Triller
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    pictureBox1.Image = new Bitmap(dlg.FileName);
+                    var bitmapp = new Bitmap(dlg.FileName);
+                    pictureBox1.Image = bitmapp;
+                    bitmap = bitmapp;
                 }
             }
 
@@ -172,7 +176,9 @@ namespace Triller
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    pictureBox2.Image = new Bitmap(dlg.FileName);
+                    var bitmap = new Bitmap(dlg.FileName);
+                    pictureBox2.Image = bitmap;
+                    normalBitmap = bitmap;
                 }
             }
         }
@@ -186,7 +192,7 @@ namespace Triller
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //settings = new DrawSettings(this);
+            draw = true;
             panel1.Invalidate();
         }
 
@@ -197,7 +203,7 @@ namespace Triller
             Color objectColor;
             Color lightColor = pictureBox3.BackColor;
             MyVector L;
-            MyVector N;
+            MyVector N = new MyVector(0, 0, 1);
             MyVector V = new MyVector(0, 0, 1);
 
             if (settings.coefficients == Coefficients.Constant)
@@ -212,19 +218,28 @@ namespace Triller
                 kd = t.kd;
                 ks = t.ks;
                 m = t.m;
-                
             }
             if (settings.objectColor == ObjectColor.Constant)
             {
                 objectColor = panel6.BackColor;
             }
-            else
+            else if (settings.objectColor == ObjectColor.FromTexture && settings.fillColor == FillColor.Exact)
             {
-                if (bitmap == null)
-                    bitmap = new Bitmap(pictureBox1.Image);
-
                 objectColor = bitmap.GetPixel(x, y);
             }
+            else if (settings.objectColor == ObjectColor.FromTexture && settings.fillColor == FillColor.Interpolated)
+            {
+                //if (t.colors == false)
+                //    t.SetColors(bitmap.GetPixel(t.A.X, t.A.Y), bitmap.GetPixel(t.B.X, t.B.Y), bitmap.GetPixel(t.C.X, t.C.Y));
+                objectColor = t.GetInterpolationPixel(x, y, bitmap.GetPixel(t.A.X, t.A.Y), bitmap.GetPixel(t.B.X, t.B.Y), bitmap.GetPixel(t.C.X, t.C.Y));
+            }
+            else
+            {
+                objectColor = t.GetInterpolationPixel(x, y, bitmap.GetPixel(t.A.X, t.A.Y), bitmap.GetPixel(t.B.X, t.B.Y), bitmap.GetPixel(t.C.X, t.C.Y));
+                var pixel = t.GetInterpolationPixel(x, y, normalBitmap.GetPixel(t.A.X, t.A.Y), normalBitmap.GetPixel(t.B.X, t.B.Y), normalBitmap.GetPixel(t.C.X, t.C.Y));
+                N = new MyVector((double)(pixel.R - 127) / 128, (double)(pixel.G - 127) / 128, (double)(pixel.B) / 255);
+            }
+
             if (settings.light == Light.Constant)
             {
                 L = new MyVector(0, 0, 1);
@@ -238,11 +253,13 @@ namespace Triller
             {
                 N = new MyVector(0, 0, 1);
             }
-            else
+            else if (settings.vectorN == VectorN.FromTexture && settings.fillColor != FillColor.Hybrid)
             {
-                // TODO
-                N = new MyVector(0, 0, 1);
+                var pixel = normalBitmap.GetPixel(x, y);
+               
+                N = new MyVector((double)(pixel.R - 127) / 128, (double)(pixel.G - 127) / 128, (double)(pixel.B) / 255);
             }
+            
 
             MyVector R = new MyVector(2 * N.X - L.X, 2 * N.Y - L.Y, 2 * N.Z - L.Z);
 
