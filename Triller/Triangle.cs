@@ -13,7 +13,7 @@ namespace Triller
         public Point A { get; set; }
         public Point B { get; set; }
         public Point C { get; set; }
-
+        public Random random = new Random();
         public double kd, ks;
         public int m;
 
@@ -25,7 +25,7 @@ namespace Triller
         public void SetCoefficients()
         {
             Random r = new Random();
-            
+
             kd = (double)(r.Next() % 101) / 100;
             ks = (double)(r.Next() % 101) / 100;
             m = r.Next() % 100 + 1;

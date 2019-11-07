@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectBitmap.cs" />
     <Compile Include="DrawSettings.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="HelperFunctions.cs" />

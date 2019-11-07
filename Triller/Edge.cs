@@ -16,7 +16,7 @@ namespace Triller
         {
             get
             {
-                return Math.Abs(A.X - B.X) / Math.Abs(A.Y - B.Y);
+                return A.X - B.X / A.Y - B.Y;
             }
         }
 

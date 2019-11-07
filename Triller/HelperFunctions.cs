@@ -9,6 +9,11 @@ namespace Triller
 {
     public static class HelperFunctions
     {
+        public static bool InArea(Point p1, Point p2, int dist)
+        {
+            return ((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y)) < dist * dist;
+        }
+
         public static void GenerateTriangles(List<Triangle> triangles, int width, int height, int M, int N)
         {
             var triangleA = width / M;
@@ -34,7 +39,7 @@ namespace Triller
             }
         }
 
-        public static void FillPolygon(List<Point> points, Graphics g, Triller triller, Triangle t = null)
+        public static void FillPolygon(List<Point> points, Triller triller, Triangle t = null, DirectBitmap bitmap = null)
         {
             List<Point> pointsSorted = new List<Point>(points);
             pointsSorted.Sort((p1, p2) => p1.Y > p2.Y ? 1 : -1);
@@ -49,6 +54,7 @@ namespace Triller
 
             for (int y = ymin; y <= ymax; y++)
             {
+                //Console.WriteLine(AET.Count);
                 for (int k = 0; k < points.Count; k++)
                 {
                     if (points[ind[k]].Y == y - 1)
@@ -62,7 +68,9 @@ namespace Triller
                             });
                         }
                         else
-                            AET.Remove(AET.Find(e => e.A == points[ind[k] - 1 >= 0 ? ind[k] - 1 : points.Count - 1] && e.B == points[ind[k]]));
+                        {
+                            AET.Remove(AET.Find(e => e.A == points[ind[k]]));
+                        }
 
                         if (points[(ind[k] + 1) % points.Count].Y > points[ind[k]].Y)
                         {
@@ -73,14 +81,20 @@ namespace Triller
                             });
                         }
                         else
-                            AET.Remove(AET.Find(e => e.A == points[(ind[k] + 1) % points.Count] && e.B == points[ind[k]]));
+                        {
+                            AET.Remove(AET.Find(e => e.A == points[ind[k]]));
+                        }
                     }
                 }
                 AET.Sort((e1, e2) => e1.GetX(y) > e2.GetX(y) ? 1 : -1);
                 for (int j = 0; j < AET.Count / 2; j++)
                 {
                     for (int p = AET[2 * j + 1].GetX(y); p >= AET[2 * j].GetX(y); p--)
-                        g.FillRectangle(new SolidBrush(GetColor(p, y, t, triller)), p, y, 1, 1);
+                    {
+                        if (p >= 0)
+                            bitmap.SetPixel(p, y, GetColor(p, y, t, triller));
+                        //g.FillRectangle(new SolidBrush(GetColor(p, y, t, triller)), p, y, 1, 1);
+                    }
 
                 }
             }
@@ -141,8 +155,8 @@ namespace Triller
                 var pixel = triller.normalBitmap.GetPixel(x, y);
                 N = new MyVector((double)(pixel.R - 127) / 128, (double)(pixel.G - 127) / 128, (double)(pixel.B) / 255);
             }
-
-            MyVector R = new MyVector(2 * N.X - L.X, 2 * N.Y - L.Y, 2 * N.Z - L.Z);
+            var NL = N.X * L.X + N.Y * L.Y + N.Z * L.Z;
+            MyVector R = new MyVector(2 * NL * N.X - L.X, 2 * NL * N.Y - L.Y, 2 * NL * N.Z - L.Z);
 
             var IR = kd * ((double)lightColor.R / 255) * ((double)objectColor.R / 255) * MyVector.MyCos(N, L) +
                      ks * ((double)lightColor.R / 255) * ((double)objectColor.R / 255) * Math.Pow(MyVector.MyCos(V, R), m);
