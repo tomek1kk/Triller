@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -9,6 +10,7 @@ namespace Triller
     public partial class Triller : Form
     {
         DirectBitmap directBitmap;
+        public static int iteration = 0;
         List<Triangle> triangles = new List<Triangle>();
         List<(Triangle, int)> trianglesToMove;
         bool moving = false;
@@ -47,6 +49,9 @@ namespace Triller
 
             foreach (var t in triangles)
                 t.Render(g, Pens.Black);
+
+            if (radioButton10.Checked == false)
+                button1_Click(null, null);
 
         }
 
@@ -154,16 +159,19 @@ namespace Triller
 
         private void RefreshScreen()
         {
+            iteration++;
+            Console.WriteLine("Iteration: " + iteration);
             foreach (var t in triangles)
             {
                 if (moving == false && draw == true)
                 {
+                    HelperFunctions.iteration = iteration;
                     HelperFunctions.FillPolygon(t.Points, this, t, directBitmap);
-
                 }
             }
             panel1.BackgroundImage = directBitmap.Bitmap;
             panel1.Invalidate();
         }
+
     }
 }

@@ -23,12 +23,12 @@ namespace Triller.Settings
                 return new CoefficientsRandom();
         }
 
-        public ILight GetLight()
+        public ILight GetLight(int x, int y, Point animation)
         {
             if (t.radioButton10.Checked)
                 return new LightConstant();
             else
-                return new LightAnimationPoint();
+                return new LightAnimationPoint(x, y, animation);
         }
 
         public IObjectColor GetObjectColor(int x, int y, Triangle triangle)

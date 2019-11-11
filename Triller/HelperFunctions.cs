@@ -10,6 +10,8 @@ namespace Triller
 {
     public static class HelperFunctions
     {
+        public static int iteration;
+
         public static bool InArea(Point p1, Point p2, int dist)
         {
             return ((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y)) < dist * dist;
@@ -102,11 +104,10 @@ namespace Triller
         public static Color GetColor(int x, int y, Triangle t)
         {
             SettingsFactory settingsFactory = new SettingsFactory();
-
             double kd = settingsFactory.GetCoefficients().Kd;
             double ks = settingsFactory.GetCoefficients().Ks;
             int m = settingsFactory.GetCoefficients().M;
-            MyVector L = settingsFactory.GetLight().L;
+            MyVector L = settingsFactory.GetLight(x, y, GetAnimationPoint(Triller.iteration, 20, 1000, new Point(400,250))).L;
             Color objectColor = settingsFactory.GetObjectColor(x, y, t).ObjectColor;
             Color lightColor = settingsFactory.GetLightColor();
             MyVector N = settingsFactory.GetVectorN(x, y, t).N;
@@ -115,14 +116,24 @@ namespace Triller
             MyVector R = new MyVector(2 * NL * N.X - L.X, 2 * NL * N.Y - L.Y, 2 * NL * N.Z - L.Z);
 
             var IR = kd * ((double)lightColor.R / 255) * ((double)objectColor.R / 255) * MyVector.MyCos(N, L) +
-                     ks * ((double)lightColor.R / 255) * ((double)objectColor.R / 255) * Math.Pow(MyVector.MyCos(V, R), m);
+                     ks * ((double)lightColor.R / 255) * ((double)objectColor.R / 255) * Math.Abs(Math.Pow(MyVector.MyCos(V, R), m));
             var IG = kd * ((double)lightColor.G / 255) * ((double)objectColor.G / 255) * MyVector.MyCos(N, L) +
-                     ks * ((double)lightColor.G / 255) * ((double)objectColor.G / 255) * Math.Pow(MyVector.MyCos(V, R), m);
+                     ks * ((double)lightColor.G / 255) * ((double)objectColor.G / 255) * Math.Abs(Math.Pow(MyVector.MyCos(V, R), m));
             var IB = kd * ((double)lightColor.B / 255) * ((double)objectColor.B / 255) * MyVector.MyCos(N, L) +
-                     ks * ((double)lightColor.B / 255) * ((double)objectColor.B / 255) * Math.Pow(MyVector.MyCos(V, R), m);
+                     ks * ((double)lightColor.B / 255) * ((double)objectColor.B / 255) * Math.Abs(Math.Pow(MyVector.MyCos(V, R), m));
 
             return Color.FromArgb(255, (int)(IR * 255) > 255 ? 255 : (int)(IR * 255), (int)(IG * 255) > 255 ? 255 : (int)(IG * 255),
                 (int)(IB * 255) > 255 ? 255 : (int)(IB * 255));
+        }
+
+        private static Point GetAnimationPoint(int iteration, int step, int r, Point middle)
+        {
+            double angle = (iteration * step) % 360;
+
+            int animationX = middle.X + (int)(r * Math.Cos(angle * Math.PI / 180));
+            int animationY = middle.Y + (int)(r * Math.Sin(angle * Math.PI / 180));
+
+            return new Point(animationX, animationY);
         }
     }
 }
