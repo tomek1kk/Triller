@@ -12,7 +12,6 @@ namespace Triller
         List<Triangle> triangles = new List<Triangle>();
         List<(Triangle, int)> trianglesToMove;
         bool moving = false;
-        public DrawSettings settings;
         public Bitmap bitmap;
         public Bitmap normalBitmap;
         bool draw = false;
@@ -26,23 +25,28 @@ namespace Triller
             directBitmap = new DirectBitmap(panel1.Width, panel1.Height);
             panel1.BackgroundImage = directBitmap.Bitmap;
             HelperFunctions.GenerateTriangles(triangles, panel1.Width, panel1.Height, M, N);
+            instance = this;
+        }
+
+        private static Triller instance;
+
+        public static Triller Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new Triller();
+                return instance;
+            }
         }
        
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
             Graphics g = e.Graphics;
-
-            Console.WriteLine("Moving: " + moving);
-
-
 
             foreach (var t in triangles)
                 t.Render(g, Pens.Black);
-
-
-
 
         }
 
@@ -150,7 +154,6 @@ namespace Triller
 
         private void RefreshScreen()
         {
-            settings = new DrawSettings(this);
             foreach (var t in triangles)
             {
                 if (moving == false && draw == true)

@@ -13,23 +13,7 @@ namespace Triller
         public Point A { get; set; }
         public Point B { get; set; }
         public Point C { get; set; }
-        public Random random = new Random();
-        public double kd, ks;
-        public int m;
 
-        public bool colors = false;
-        public bool normalColors = false;
-
-        public List<Color> interpolationMap;
-
-        public void SetCoefficients()
-        {
-            Random r = new Random();
-
-            kd = (double)(r.Next() % 101) / 100;
-            ks = (double)(r.Next() % 101) / 100;
-            m = r.Next() % 100 + 1;
-        }
 
         public List<Point> Points
         {

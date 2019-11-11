@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Triller.Settings;
 
 namespace Triller
 {
@@ -54,7 +55,6 @@ namespace Triller
 
             for (int y = ymin; y <= ymax; y++)
             {
-                //Console.WriteLine(AET.Count);
                 for (int k = 0; k < points.Count; k++)
                 {
                     if (points[ind[k]].Y == y - 1)
@@ -92,70 +92,26 @@ namespace Triller
                     for (int p = AET[2 * j + 1].GetX(y); p >= AET[2 * j].GetX(y); p--)
                     {
                         if (p >= 0)
-                            bitmap.SetPixel(p, y, GetColor(p, y, t, triller));
-                        //g.FillRectangle(new SolidBrush(GetColor(p, y, t, triller)), p, y, 1, 1);
+                            bitmap.SetPixel(p, y, GetColor(p, y, t));
                     }
 
                 }
             }
         }
 
-        public static Color GetColor(int x, int y, Triangle t, Triller triller)
+        public static Color GetColor(int x, int y, Triangle t)
         {
-            double kd, ks;
-            int m;
-            Color objectColor;
-            Color lightColor = triller.pictureBox3.BackColor;
-            MyVector L;
-            MyVector N = new MyVector(0, 0, 1);
+            SettingsFactory settingsFactory = new SettingsFactory();
+
+            double kd = settingsFactory.GetCoefficients().Kd;
+            double ks = settingsFactory.GetCoefficients().Ks;
+            int m = settingsFactory.GetCoefficients().M;
+            MyVector L = settingsFactory.GetLight().L;
+            Color objectColor = settingsFactory.GetObjectColor(x, y, t).ObjectColor;
+            Color lightColor = settingsFactory.GetLightColor();
+            MyVector N = settingsFactory.GetVectorN(x, y, t).N;
             MyVector V = new MyVector(0, 0, 1);
-
-            if (triller.settings.coefficients == Coefficients.Constant)
-            {
-                kd = (double)triller.trackBar1.Value / 100;
-                ks = (double)triller.trackBar2.Value / 100;
-                m = triller.trackBar3.Value;
-            }
-            else
-            {
-                t.SetCoefficients();
-                kd = t.kd;
-                ks = t.ks;
-                m = t.m;
-            }
-            if (triller.settings.objectColor == ObjectColor.Constant)
-                objectColor = triller.panel6.BackColor;
-            else if (triller.settings.objectColor == ObjectColor.FromTexture && triller.settings.fillColor == FillColor.Exact)
-                objectColor = triller.bitmap.GetPixel(x, y);
-            else if (triller.settings.objectColor == ObjectColor.FromTexture && triller.settings.fillColor == FillColor.Interpolated)
-                objectColor = t.GetInterpolationPixel(x, y, triller.bitmap.GetPixel(t.A.X, t.A.Y), triller.bitmap.GetPixel(t.B.X, t.B.Y), triller.bitmap.GetPixel(t.C.X, t.C.Y));
-            else if (triller.settings.objectColor == ObjectColor.FromTexture && triller.settings.fillColor == FillColor.Hybrid && triller.settings.vectorN == VectorN.FromTexture)
-            {
-                objectColor = t.GetInterpolationPixel(x, y, triller.bitmap.GetPixel(t.A.X, t.A.Y), triller.bitmap.GetPixel(t.B.X, t.B.Y), triller.bitmap.GetPixel(t.C.X, t.C.Y));
-                var pixel = t.GetInterpolationPixel(x, y, triller.normalBitmap.GetPixel(t.A.X, t.A.Y), triller.normalBitmap.GetPixel(t.B.X, t.B.Y), triller.normalBitmap.GetPixel(t.C.X, t.C.Y));
-                N = new MyVector((double)(pixel.R - 127) / 128, (double)(pixel.G - 127) / 128, (double)(pixel.B) / 255);
-            }
-            else
-            {
-                objectColor = t.GetInterpolationPixel(x, y, triller.bitmap.GetPixel(t.A.X, t.A.Y), triller.bitmap.GetPixel(t.B.X, t.B.Y), triller.bitmap.GetPixel(t.C.X, t.C.Y));
-                N = new MyVector(0, 0, 1);
-            }
-
-            if (triller.settings.light == Light.Constant)
-                L = new MyVector(0, 0, 1);
-            else
-            { 
-                // TODO
-                L = new MyVector(0, 0, 1);
-            }
-            if (triller.settings.vectorN == VectorN.Constant)
-                N = new MyVector(0, 0, 1);
-            else if (triller.settings.vectorN == VectorN.FromTexture && triller.settings.fillColor != FillColor.Hybrid)
-            {
-                var pixel = triller.normalBitmap.GetPixel(x, y);
-                N = new MyVector((double)(pixel.R - 127) / 128, (double)(pixel.G - 127) / 128, (double)(pixel.B) / 255);
-            }
-            var NL = N.X * L.X + N.Y * L.Y + N.Z * L.Z;
+            double NL = N.X * L.X + N.Y * L.Y + N.Z * L.Z;
             MyVector R = new MyVector(2 * NL * N.X - L.X, 2 * NL * N.Y - L.Y, 2 * NL * N.Z - L.Z);
 
             var IR = kd * ((double)lightColor.R / 255) * ((double)objectColor.R / 255) * MyVector.MyCos(N, L) +

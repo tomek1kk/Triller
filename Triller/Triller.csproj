@@ -46,12 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectBitmap.cs" />
-    <Compile Include="DrawSettings.cs" />
-    <Compile Include="Edge.cs" />
+    <Compile Include="Models\DirectBitmap.cs" />
+    <Compile Include="Models\Edge.cs" />
     <Compile Include="HelperFunctions.cs" />
-    <Compile Include="MyVector.cs" />
-    <Compile Include="Triangle.cs" />
+    <Compile Include="Models\MyVector.cs" />
+    <Compile Include="Settings\FillColor.cs" />
+    <Compile Include="Settings\ObjectColor\ObjectColorFromTexture.cs" />
+    <Compile Include="Settings\Coefficients\CoefficientsConstant.cs" />
+    <Compile Include="Settings\Coefficients\CoefficientsRandom.cs" />
+    <Compile Include="Settings\Coefficients\ICoefficients.cs" />
+    <Compile Include="Settings\Light\ILight.cs" />
+    <Compile Include="Settings\Light\LightAnimationPoint.cs" />
+    <Compile Include="Settings\Light\LightConstant.cs" />
+    <Compile Include="Settings\ObjectColor\IObjectColor.cs" />
+    <Compile Include="Settings\ObjectColor\ObjectColorConstant.cs" />
+    <Compile Include="Settings\ObjectColor\ObjectColorInterpolated.cs" />
+    <Compile Include="Settings\SettingsFactory.cs" />
+    <Compile Include="Settings\VectorN\IVectorN.cs" />
+    <Compile Include="Settings\VectorN\VectorNConstant.cs" />
+    <Compile Include="Settings\VectorN\VectorNFromTexture.cs" />
+    <Compile Include="Settings\VectorN\VectorNInterpolated.cs" />
+    <Compile Include="Models\Triangle.cs" />
     <Compile Include="Triller.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,5 +100,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
